@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    # Читаем из stdin
+    ./detect.sh
+else
+    # Читаем из файла
+    for file in "$@"; do
+        if [ -f "$file" ]; then
+            result=$(cat "$file" | ./detect.sh 2>/dev/null)
+            printf "%-30s: %s\n" "$file" "$result"
+        else
+            printf "%-30s: файл не найден\n" "$file"
+        fi
+    done
+fi
